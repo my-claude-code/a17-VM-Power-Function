@@ -1,4 +1,1 @@
 azure-functions
-azure-mgmt-compute
-azure-mgmt-network
-azure-identity
