@@ -6,8 +6,6 @@ from azure.identity import ManagedIdentityCredential
 from azure.mgmt.compute import ComputeManagementClient
 from azure.mgmt.network import NetworkManagementClient
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
-
 VM_NAME = os.environ.get("VM_NAME", "mgmt-vm")
 VM_RG   = os.environ.get("VM_RG",   "my-vm-rg")
 
@@ -32,8 +30,7 @@ def _get_public_ip(compute_client, network_client):
     return pip.ip_address
 
 
-@app.route(route="vm-power")
-def vm_power(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest) -> func.HttpResponse:
     action = req.params.get("action", "").lower()
 
     if action not in ("start", "stop"):
