@@ -4,3 +4,4 @@ terraform.tfvars
 *.tfstate
 *.tfstate.backup
 function.zip
+function_app/.python_packages/

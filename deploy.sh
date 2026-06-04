@@ -5,18 +5,26 @@ set -euo pipefail
 FUNCTION_APP="fn-vm-power-ivansto"
 RG="rg-vm-power-function"
 
-echo "==> Packaging function code..."
+echo "==> Installing packages into zip bundle..."
 cd function_app
-zip -r ../function.zip .
+pip install \
+    --target=".python_packages/lib/site-packages" \
+    -r requirements.txt \
+    --quiet
+
+echo "==> Packaging function code with dependencies..."
+zip -r ../function.zip . --exclude "*.pyc" --exclude "*__pycache__*"
 cd ..
 
-echo "==> Deploying to Azure Function App (this takes ~1 min)..."
+echo "==> Deploying to Azure Function App..."
 az functionapp deployment source config-zip \
     --resource-group "$RG" \
     --name "$FUNCTION_APP" \
     --src function.zip
 
+echo "==> Cleaning up..."
 rm -f function.zip
+rm -rf function_app/.python_packages
 
 echo ""
 echo "==> Getting function key..."

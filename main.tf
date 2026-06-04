@@ -62,11 +62,9 @@ resource "azurerm_linux_function_app" "fn" {
   }
 
   app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME"       = "python"
-    "AZURE_SUBSCRIPTION_ID"          = data.azurerm_client_config.current.subscription_id
-    "AzureWebJobsFeatureFlags"       = "EnableWorkerIndexing"
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
-    "ENABLE_ORYX_BUILD"              = "true"
+    "FUNCTIONS_WORKER_RUNTIME" = "python"
+    "AZURE_SUBSCRIPTION_ID"    = data.azurerm_client_config.current.subscription_id
+    "AzureWebJobsFeatureFlags" = "EnableWorkerIndexing"
   }
 }
 
