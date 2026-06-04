@@ -13,9 +13,10 @@ API_VER_NETWORK = "api-version=2023-09-01"
 
 
 def get_token():
-    url = ("http://169.254.169.254/metadata/identity/oauth2/token"
-           "?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com%2F")
-    req = urllib.request.Request(url, headers={"Metadata": "true"})
+    endpoint = os.environ["IDENTITY_ENDPOINT"]
+    header   = os.environ["IDENTITY_HEADER"]
+    url = f"{endpoint}?api-version=2019-08-01&resource=https://management.azure.com/"
+    req = urllib.request.Request(url, headers={"X-IDENTITY-HEADER": header})
     with urllib.request.urlopen(req, timeout=10) as r:
         return json.loads(r.read())["access_token"]
 
